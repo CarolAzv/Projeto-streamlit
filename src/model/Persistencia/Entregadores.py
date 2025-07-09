@@ -1,6 +1,6 @@
 import json
 import os # Importar os para o caminho do arquivo
-from src.model.Entidades.Cliente import Cliente
+from src.model.Entidades.Entregador import Entregador
 
 class Entregadores:
     objetos = [] 
