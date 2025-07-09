@@ -1,15 +1,9 @@
 import streamlit as st
-import sys
-import os
-
-folder_path = os.path.abspath('src/model/Entidades/Categoria')
-sys.path.append(folder_path)
-
-from Categoria import Categoria
+#need to import Categoria
+#need to import Cliente
 
 def inserir_catogita(descricao):
-    c = Categoria(0, descricao)
-    Categorias.inserir(c)
+    Categorias.inserir(0, descricao)
 
 def inserir_catogitaUI():
     st.title("Criar categoria")
@@ -22,29 +16,64 @@ def inserir_catogitaUI():
         if not descrição:
             st.error("Preencha o campo.")
             return
-    try:
-                
-        user_type = VisitorView.autenticar_usuario(email, senha)
+    try:   
+        inserir_catogita(descrição)
 
-        if user_type == "Admin":
-            st.success("Login de Admin bem-sucedido!")
-            st.switch_page("AdminPage") 
-        elif user_type == "Client":
-            st.success("Login de Cliente bem-sucedido!")
-            st.switch_page("ClientPage") 
-        elif user_type == "Deliverer":
-            st.success("Login de Entregador bem-sucedido!")
-            st.switch_page("DelivererPage") 
-        else:
-            st.error("Tipo de usuário desconhecido.") 
+def inserir_catogita(descricao):
+    Categorias.inserir(0, descricao)
 
-    except ValueError as e:
-            st.error(f"Erro de Login: {e}") 
-    except Exception as e:
-            st.error(f"Ocorreu um erro inesperado: {e}") 
+def inserir_catogitaUI():
+    st.title("Criar categoria")
+    with st.form("inserir_categoria_form"):
+        descrição = st.text_input("Descrição:")
 
+        submitted = st.form_submit_button("Finalizar")
+
+    if submitted:
+        if not descrição:
+            st.error("Preencha o campo.")
+            return
+    try:   
+        inserir_catogita(descricao)
 
 
-    #descricao = input("Informe a descrição: ")
-    #    c = Categoria(0, descricao)
-    #    Categorias.inserir(c)
+def inserir_cliente(id, nome, email, senha, fone):
+    Cliente.inserir(id, nome, email, senha, fone)
+
+def inserir_clienteUI():
+    st.title("Criar cliente")
+    with st.form("inserir_categoria_form"):
+        id = st.text_input("id:")
+        nome = st.text_input("nome:")
+        email = st.text_input("email:")
+        senha = st.text_input("senha:")
+        fone = st.text_input("fone:")
+
+        submitted = st.form_submit_button("Finalizar")
+
+    if submitted:
+        if not id or nome or email or senha or fone:
+            st.error("Preencha todos os campos.")
+            return
+    try:   
+        inserir_cliente(id, nome, email, senha, fone)
+
+def inserir_produto(id, descricao, preco, estoque):
+    Produto(id, descricao, preco, estoque)
+
+def inserir_produtoUI():
+    st.title("Criar cliente")
+    with st.form("inserir_categoria_form"):
+        id = st.text_input("id:")
+        descricao = st.text_input("descrição:")
+        preco = st.text_input("preço:")
+        estoque = st.text_input("estoque:")
+
+        submitted = st.form_submit_button("Finalizar")
+
+    if submitted:
+        if not id or descricao or preco or estoque:
+            st.error("Preencha todos os campos.")
+            return
+    try:   
+        inserir_produto(id, nome, email, senha, fone)
