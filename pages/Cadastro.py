@@ -8,12 +8,26 @@ def cliente_inserir_ui():
         senha = st.text_input("Senha:", type="password") 
         fone = st.text_input("Telefone:")
 
-        submitted = st.form_submit_button("Cadastrar") 
+        submitted1 = st.form_submit_button("Cadastrar como cliente")
+        submitted2 = st.form_submit_button("Cadastrar como entregador") 
 
-    if submitted:
+    if submitted1:
             try:
                 import VisitorView
-                VisitorView.abrir_conta(nome, email, senha, fone) 
+                VisitorView.abrir_conta_cliente(nome, email, senha, fone) 
+                st.info("Você pode fazer login agora.")
+                st.session_state.logged_in = False
+                st.switch_page("Login")
+
+            except ValueError as e:
+                st.error(f"Erro ao cadastrar: {e}")
+            except Exception as e:
+                st.error(f"Ocorreu um erro inesperado: {e}")
+
+    if submitted2:
+            try:
+                import VisitorView
+                VisitorView.abrir_conta_entregador(nome, email, senha, fone) 
                 st.info("Você pode fazer login agora.")
                 st.session_state.logged_in = False
                 st.switch_page("Login")
