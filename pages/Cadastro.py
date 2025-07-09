@@ -1,4 +1,5 @@
 import streamlit as st
+from view.VisitorView import VisitorView
 
 def cliente_inserir_ui():
     st.title("Cadastro")
