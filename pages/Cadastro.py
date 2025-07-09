@@ -14,7 +14,6 @@ def cliente_inserir_ui():
 
     if submitted1:
             try:
-                import VisitorView
                 VisitorView.abrir_conta_cliente(nome, email, senha, fone) 
                 st.info("Você pode fazer login agora.")
                 st.session_state.logged_in = False
@@ -27,7 +26,6 @@ def cliente_inserir_ui():
 
     if submitted2:
             try:
-                import VisitorView
                 VisitorView.abrir_conta_entregador(nome, email, senha, fone) 
                 st.info("Você pode fazer login agora.")
                 st.session_state.logged_in = False
