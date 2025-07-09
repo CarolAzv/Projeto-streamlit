@@ -1,6 +1,7 @@
 import streamlit as st
+from view.AdminView import AdminView
 
-def adminPage():
+def AdminPage():
     st.title("Mercado eletrônico")
     st.header("Bem-vindo(a) Admin")
 
@@ -12,7 +13,7 @@ def adminPage():
 
     with col1:
         if st.button("Cadastrar categorias"):
-            st.switch_page("Categorias")
+            AdminView.inserir_catogitaUI()
     with col2:
         if st.button("Cadastrar clientes"):
            st.switch_page("Clientes")
@@ -32,4 +33,4 @@ def adminPage():
         if st.button("Iniciar a entrega"):
             st.switch_page("IniciarEntregas")
 
-adminPage()
+AdminPage()
