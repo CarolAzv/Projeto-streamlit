@@ -2,7 +2,7 @@ import streamlit as st
 
 def DelivererPage():
     st.title("Mercado eletrônico")
-    st.header("Bem-vindo(a) Visitante")
+    st.header("Bem-vindo(a) Entregador")
 
     col1, col2 = st.columns(2)
 
