@@ -281,16 +281,18 @@ def show():
             st.subheader("Cadastrar nova Produto")
             st.write("Preencha os dados para criar produto.")
             with st.form("form_cadastro_produto", clear_on_submit=True):
-                descricao_novo = st.text_input("Descrição:", key="cadastro_descricao")
+                descricao_novo = st.text_input("Descrição:", key="cadastro_descricao") //preco, estoque
+                preco_novo = st.text_input("Preco:", key="cadastro_preco")
+                estoque_novo = st.text_input("Estoque:", key="cadastro_estoque")
 
                 submitted_cadastro = st.form_submit_button("Cadastrar Produto")
 
                 if submitted_cadastro:
-                    if not descricao_novo:
+                    if not descricao_novo or not preco_novo or not estoque_novo:
                         st.error("Por favor, preencha o campo para o cadastro.")
                     else:
                         try:
-                            novo_produto = Produto(id=0, descricao=descricao_novo)
+                            novo_produto = Produto(id=0, descricao=descricao_novo , preco=preco_novo, estoque=estoque_novo)
                             Produtos.inserir(novo_produto)
                             
                             st.success(f"Produto '{nome_novo}' cadastrado com sucesso!")
