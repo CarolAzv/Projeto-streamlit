@@ -1,13 +1,29 @@
-from src.model.Entidades.Cliente import Cliente
 from src.model.Persistencia.Clientes import Clientes
-from src.model.Entidades.Entregador import Entregador
 from src.model.Persistencia.Entregadores import Entregadores
 
-class VisitorView:
-    def abrir_conta_cliente(nome, email, senha, fone):
-        c = Cliente(0, nome, email, senha, fone)
-        Clientes.inserir(c)
 
-    def abrir_conta_entregador(nome, email, senha, fone):
-        c = Entregador(0, nome, email, senha, fone)
-        Entregadores.inserir(c)
+class usuario:
+    admin_email = "admin"
+    admin_senha = "1234"
+    @classmethod
+    def login(cls,email,senha):
+        email = email.strip().lower()
+        if email == cls.admin_email and senha == cls.admin_senha:
+            return "admin"
+        clientes = Clientes.listar()
+        for cliente in clientes:
+            if cliente.get_email().lower() == email:
+                if cliente.get_senha() == senha:
+                    return "cliente"
+                else:
+                    raise ValueError("Credenciais inválidas: Senha incorreta.")
+        entregadores = Entregadores.listar()
+        for entregador in entregadores:
+            if entregador.get_email().lower() == email:
+                if entregador.get_senha() == senha:
+                    return "entregador"
+                else:  
+                    raise ValueError("Credenciais inválidas: Senha incorreta.")
+            
+        raise ValueError("Credenciais inválidas: Email não cadastrado.")
+

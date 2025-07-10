@@ -1,6 +1,7 @@
 import json
 import os
 from src.model.Entidades.VendaItem import VendaItem
+import streamlit as st
 
 class VendaItens: 
     objetos = []
@@ -61,14 +62,14 @@ class VendaItens:
                 with open(cls.FILE_PATH, "r", encoding='utf-8') as arquivo:
                     dados = json.load(arquivo)
                     for d in dados:
-                        obj = VendaItem.from_dict(d)
+                        obj = VendaItem.to_dict(d)
                         cls.objetos.append(obj)
             else:
                 with open(cls.FILE_PATH, 'w', encoding='utf-8') as f:
                     json.dump([], f, indent=4) # Garante que seja um JSON vazio
         except json.JSONDecodeError:
             cls.objetos = []
-            print(f"Atenção: O arquivo '{cls.FILE_PATH}' está corrompido ou vazio. Inicializando com dados vazios.")
+            st.write(f"Atenção: O arquivo '{cls.FILE_PATH}' está corrompido ou vazio. Inicializando com dados vazios.")
         except FileNotFoundError:
             pass
 

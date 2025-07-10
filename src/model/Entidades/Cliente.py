@@ -1,3 +1,4 @@
+import streamlit as st
 class Cliente:
     def __init__(self, id, nome, email,senha, fone):
         self.__id = id
@@ -12,9 +13,13 @@ class Cliente:
     def set_email(self, email):
         self.__email = email
     def set_senha(self,s):
-        if len(s) < 4 : raise ValueError(f"Senha deve ter no mínimo 8 caracteres")
+        if len(s) < 4 : raise ValueError(f"Senha deve ter no mínimo 4 caracteres")
         self.__senha = s
-    def set_fone(self, fone): self.__fone = fone
+    def set_fone(self, fone):
+        if len(fone) == 11:
+            self.__fone = fone
+        else:
+            raise ValueError("O número deve está no formato xxxxxxxxxxx - com 11 números")
 
     def get_id(self): return self.__id
     def get_nome(self): return self.__nome
@@ -25,3 +30,13 @@ class Cliente:
         return f"{self.__id} - {self.__nome} - {self.__email} - {self.__senha} - {self.__fone}"
     def to_dict(self):
         return {"id": self.__id,"nome": self.__nome,"email": self.__email, "senha": self.__senha, "fone": self.__fone}
+    @classmethod
+    def from_dict(cls, data):
+        # Cria e retorna um novo objeto Cliente a partir de um dicionário
+        return cls(
+            id=data['id'],
+            nome=data['nome'],
+            email=data['email'],
+            senha=data['senha'],
+            fone=data['fone']
+        )

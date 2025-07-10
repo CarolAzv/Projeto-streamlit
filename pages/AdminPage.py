@@ -1,36 +1,79 @@
 import streamlit as st
-from view.AdminView import AdminView
+import pandas as pd
+from src.model.Entidades.Cliente import Cliente 
+from src.model.Persistencia.Clientes import Clientes 
 
-def AdminPage():
-    st.title("Mercado eletrônico")
-    st.header("Bem-vindo(a) Admin")
+def show():
+    if not st.session_state.get('logged_in') or st.session_state.get('user_type') != 'admin':
+        st.warning("Acesso negado. Por favor, faça login como administrador.")
+        st.session_state.pagina_atual = 'login' 
+        st.rerun()
+        return
+    
+    st.title("Área Administrativa")
+    admin_obj = st.session_state.get('user_object')
+    col_esquerda,col_centro,col_direita = st.columns([1,1,0.2])
+    with col_esquerda:
+        st.write("Bem-vindo(a), administrador")
+    with col_direita:
+        if st.button("Sair",key = "logout_admin_page"):
+            st.session_state.logged_in = False
+            st.session_state.user_type = None
+            st.session_state.user_email = None
+            st.session_state.user_object = None
 
-    col1, col2 = st.columns(2)
-    col3, col4 = st.columns(2)
-    col5, col6, col7 = st.columns(3)
-    #col5, col6 = st.columns(2)
-    #col7 = st.columns(1)
+            st.session_state.pagina_atual = "home"
+            st.success("Você foi desconectado com sucesso")
+            st.rerun()
 
-    with col1:
-        if st.button("Cadastrar categorias"):
-            AdminView.inserir_catogitaUI()
-    with col2:
-        if st.button("Cadastrar clientes"):
-           st.switch_page("Clientes")
-    with col3:
-        if st.button("Cadastrar entregadores"):
-            st.switch_page("Entregadores")
-    with col4:
-        if st.button("Cadastrar produtos"):
-           st.switch_page("Produtos")
-    with col5:
-        if st.button("Reajustar preço de produtos"):
-            st.switch_page("Reajustar")
-    with col6:
-        if st.button("Listar as compras"):
-           st.switch_page("Listar")
-    with col7:
-        if st.button("Iniciar a entrega"):
-            st.switch_page("IniciarEntregas")
+    st.markdown("---")
+    tab_clientes,tab_entregadores,tab_produtos,tab_entregas = st.tabs([
+        "Gerenciar Clientes",
+        "Gerenciar Entregadores",
+        "Gerenciar Produtos",
+        "Gerenciar Entregas",
+    ])
+    with tab_clientes:
+        st.header("Gerenciar Clientes")
+        opcoes_cliente = st.radio(
+            "Selecione uma ação:",
+            ("Cadastrar Cliente","Listar Clientes","Listar Compras","Atualizar dados do Cliente","Excluir Cliente"),
+            key = "radio_clientes"
+        )
+        if opcoes_cliente == "Cadastrar Cliente":
+            st.subheader("Cadastrar novo cliente")
+            st.write("Preencha os dados para criar a conta.")
+            with st.form("form_cadastro_cliente", clear_on_submit=True):
+                nome_novo = st.text_input("Nome Completo:", key="cadastro_nome")
+                email_novo = st.text_input("Email:", key="cadastro_email")
+                senha_nova = st.text_input("Senha:", type="password", key="cadastro_senha")
+                fone_novo = st.text_input("Telefone:", key="cadastro_fone")
 
-AdminPage()
+                submitted_cadastro = st.form_submit_button("Cadastrar Cliente")
+
+                if submitted_cadastro:
+                    if not nome_novo or not email_novo or not senha_nova or not fone_novo:
+                        st.error("Por favor, preencha todos os campos para o cadastro.")
+                    else:
+                        try:
+                            novo_cliente = Cliente(id=0, nome=nome_novo, email=email_novo, senha=senha_nova, fone=fone_novo)
+                            Clientes.inserir(novo_cliente)
+                            
+                            st.success(f"Cliente '{nome_novo}' cadastrado com sucesso!")
+                            
+                        except ValueError as e:
+                            st.error(f"Erro no cadastro: {e}")
+                        except Exception as e:
+                            st.error(f"Ocorreu um erro inesperado: {e}")
+        elif opcoes_cliente == "Listar Clientes":
+            st.subheader("Lista de clientes cadastrados")
+            todos_clientes = Clientes.listar()
+            if todos_clientes:
+                dados_clientes = [c.to_dict() for c in todos_clientes]
+                
+                # Opcional: Converter para DataFrame para mais funcionalidades (filtro, ordenação)
+                df_clientes = pd.DataFrame(dados_clientes) 
+                
+                st.dataframe(df_clientes) # Exibe como uma tabela interativa
+            else:
+                st.info("Nenhum cliente cadastrado ainda.")

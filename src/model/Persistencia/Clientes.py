@@ -1,10 +1,10 @@
 import json
 import os # Importar os para o caminho do arquivo
 from src.model.Entidades.Cliente import Cliente 
-
+import streamlit as st
 class Clientes:
     objetos = [] 
-    FILE_PATH = 'data/clients.json'
+    FILE_PATH = 'data/clientes.json'
 
     @classmethod 
     def inserir(cls, obj):
@@ -83,7 +83,7 @@ class Clientes:
                     json.dump([], f, indent=4)
         except json.JSONDecodeError:
             cls.objetos = []
-            print(f"Atenção: O arquivo '{cls.FILE_PATH}' está corrompido ou vazio. Inicializando com dados vazios.")
+            st.write(f"Atenção: O arquivo '{cls.FILE_PATH}' está corrompido ou vazio. Inicializando com dados vazios.")
         except FileNotFoundError:
             pass
 

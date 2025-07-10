@@ -17,20 +17,3 @@ class Categoria:
         return {"id": self.__id, "descricao": self.__descricao}
     def __str__(self):
         return f"ID:{self.__id} - Descrição{self.__descricao}"
-    @staticmethod
-    def from_dict(data: dict):
-        """Cria um objeto Categoria a partir de um dicionário (para desserialização)."""
-        if not isinstance(data, dict):
-            raise TypeError("Os dados devem ser um dicionário para criar uma Categoria.")
-        return Categoria(id=int(data["id"]), descricao=data["descricao"])
-
-    def __str__(self):
-        return f"ID: {self.__id} - Descrição: {self.__descricao}"
-
-    def __repr__(self):
-        return f"Categoria(id={self.__id}, descricao='{self.__descricao}')"
-
-    def __eq__(self, other):
-        if not isinstance(other, Categoria):
-            return NotImplemented
-        return self.__id == other.get_id()

@@ -1,18 +1,19 @@
 import json
-import os # Importar os para o caminho do arquivo
-from src.model.Entidades.Entregador import Entregador
-
+import os
+from src.model.Entidades.Entregador import Entregador # Importa sua classe Delivery
+import streamlit as st
 class Entregadores:
-    objetos = [] 
+    objetos = []
+
     FILE_PATH = 'data/entregadores.json'
 
-    @classmethod 
+    @classmethod
     def inserir(cls, obj):
-        cls.abrir() 
+        cls.abrir()
         m = max((x.get_id() for x in cls.objetos), default=0)
         obj.set_id(m + 1)
         cls.objetos.append(obj)
-        cls.salvar() 
+        cls.salvar()
 
     @classmethod
     def listar(cls):
@@ -33,13 +34,13 @@ class Entregadores:
         found = False
         for i, item in enumerate(cls.objetos):
             if item.get_id() == obj.get_id():
-                cls.objetos[i] = obj 
+                cls.objetos[i] = obj
                 found = True
                 break
         if found:
             cls.salvar()
         else:
-            raise ValueError(f"Cliente com ID {obj.get_id()} não encontrado para atualização.")
+            raise ValueError(f"Entregador com ID {obj.get_id()} não encontrado para atualização.")
 
     @classmethod
     def excluir(cls, obj):
@@ -49,41 +50,25 @@ class Entregadores:
         if len(cls.objetos) < original_len:
             cls.salvar()
         else:
-            raise ValueError(f"Cliente com ID {obj.get_id()} não encontrado para exclusão.")
-
-    @classmethod
-    def listar_nome(cls, nome):
-        cls.abrir()
-        for obj in cls.objetos:
-            if obj.get_nome() == nome:
-                return obj
-        return None
-
-    @classmethod
-    def listar_email(cls, email: str):
-        cls.abrir()
-        for obj in cls.objetos:
-            if obj.get_email().lower() == email.lower(): # Compara em minúsculas
-                return obj
-        return None
+            raise ValueError(f"Entregador com ID {obj.get_id()} não encontrado para exclusão.")
 
     @classmethod
     def abrir(cls):
-        cls.objetos = [] 
+        cls.objetos = []
         os.makedirs(os.path.dirname(cls.FILE_PATH), exist_ok=True)
         try:
             if os.path.exists(cls.FILE_PATH) and os.path.getsize(cls.FILE_PATH) > 0:
                 with open(cls.FILE_PATH, "r", encoding='utf-8') as arquivo:
                     dados = json.load(arquivo)
                     for d in dados:
-                        obj = Cliente.from_dict(d)
+                        obj = Entregador.from_dict(d)
                         cls.objetos.append(obj)
             else:
                 with open(cls.FILE_PATH, 'w', encoding='utf-8') as f:
-                    json.dump([], f, indent=4)
+                    json.dump([], f, indent=4) 
         except json.JSONDecodeError:
             cls.objetos = []
-            print(f"Atenção: O arquivo '{cls.FILE_PATH}' está corrompido ou vazio. Inicializando com dados vazios.")
+            st.write(f"Atenção: O arquivo '{cls.FILE_PATH}' está corrompido ou vazio. Inicializando com dados vazios.")
         except FileNotFoundError:
             pass
 

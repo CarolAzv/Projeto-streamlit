@@ -59,7 +59,7 @@ class Produtos:
                 with open(cls.FILE_PATH, "r", encoding='utf-8') as arquivo:
                     dados = json.load(arquivo)
                     for d in dados:
-                        obj = Produto.from_dict(d)
+                        obj = Produto.to_dict(d)
                         cls.objetos.append(obj)
             else:
                 with open(cls.FILE_PATH, 'w', encoding='utf-8') as f:

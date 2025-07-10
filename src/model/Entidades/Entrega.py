@@ -34,8 +34,10 @@ class Entrega:
     def set_data_inicio(self,i):
         if i == None:
             i = datetime.now()
+        else:
+            self.__data_inicio = i
         self.__data_inicio = i
-    def set_data_fim(self,f):
+    def set_data_fim(self,f): 
         self.__data_fim = f
     def get_id(self): return self.__id
     def get_id_entregador(self): return self.__id_entregador
@@ -47,5 +49,18 @@ class Entrega:
     def get_data_fim(self): return self.__data_fim
     def __str__(self):
         return f"{self.__id} - {self.__id_venda} - {self.__id_entregador} - {self.__nome_cliente} - {self.__endereco} - {self.__valor_total} - {self.__valor_frete} - {self.__data_inicio} - {self.__data_fim}"
-#   def to_dict(self):
-#       return f"{self.__id} - {self.__id_venda} - {self.__id_entregador} - {self.__nome_cliente} - {self.__endereco} - {self.__valor_total} - {self.__valor_frete} - {self.__data_inicio} - {self.__data_fim}"
+    def to_dict(self):
+      return {"id":self.__id,"id_venda":self.__id_venda,"id_entregador":self.__id_entregador,"nome_cliente":self.__nome_cliente,"endereço":self.__endereco,"valor_total":self.__valor_total,"valor_frete":self.__valor_frete,"data_inicio":self.__data_inicio,"data_fim":self.__data_fim}
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            id=data['id'],
+            id_venda=data['id_venda'],
+            id_entregador=data['id_entregador'],
+            valor_total=data['valor_total'],
+            valor_frete=data['valor_frete'],
+            endereco=data['endereco'],
+            cliente=data['nome_cliente'], 
+            data_inicio=data['data_inicio'],
+            data_fim=data['data_fim']
+        )
