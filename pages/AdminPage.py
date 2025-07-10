@@ -245,6 +245,7 @@ def show():
                             st.error(f"Erro na exclusão: {e}")
                         except Exception as e:
                             st.error(f"Ocorreu um erro inesperado: {e}")
+                            
 
     with tab_produtos:
         st.header("Gerenciar Produtos")
@@ -314,6 +315,9 @@ def show():
                 st.dataframe(df_produtos) # Exibe como uma tabela interativa
             else:
                 st.info("Nenhum produto registrado.")
+
+        elif opcoes_produto == "Reajustar preço do Porduto":
+            st.subheader("Reajustar de preço do Porduto")
 
 
 show()
