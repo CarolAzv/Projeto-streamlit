@@ -8,7 +8,9 @@ from src.model.Persistencia.Entregadores import Entregadores
 from src.model.Entidades.Categoria import Categoria 
 from src.model.Persistencia.Categorias import Categorias
 from src.model.Entidades.Produto import Produto 
-from src.model.Persistencia.Produtos import Produtos 
+from src.model.Persistencia.Produtos import Produtos
+
+from view.AdminView import AdminView
 
 def show():
     if not st.session_state.get('logged_in') or st.session_state.get('user_type') != 'admin':
