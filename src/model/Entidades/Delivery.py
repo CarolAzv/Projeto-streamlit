@@ -6,6 +6,7 @@ class Delivery:
         self.set_senha(senha)
         self.set_fone(fone)
         self.set_transporte(transporte)
+        self.set_status(status)
     def set_id(self, id): self.__id = id
     def set_nome(self, nome):
         if nome == "": raise ValueError("Informe seu nome")
@@ -22,6 +23,13 @@ class Delivery:
             self.__transporte = t
         else:
             raise ValueError("Informe o modo de transporte")
+    def set_status(self,t):
+        a = t.lower()
+        if a == "pendente" or a == "a caminho" or a == "concuido":
+            self.__status = t
+        else:
+            raise ValueError("Informe o status do transporte")
+
 
 
     def get_id(self): return self.__id
