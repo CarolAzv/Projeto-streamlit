@@ -279,8 +279,8 @@ def show():
 
         elif opcoes_produto == "Cadastrar Produto":
             st.subheader("Cadastrar nova Produto")
-            st.write("Preencha os dados para criar cstegoria.")
-            with st.form("form_cadastro_categoria", clear_on_submit=True):
+            st.write("Preencha os dados para criar produto.")
+            with st.form("form_cadastro_produto", clear_on_submit=True):
                 descricao_novo = st.text_input("Descrição:", key="cadastro_descricao")
 
                 submitted_cadastro = st.form_submit_button("Cadastrar Produto")
