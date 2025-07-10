@@ -302,4 +302,18 @@ def show():
                         except Exception as e:
                             st.error(f"Ocorreu um erro inesperado: {e}")
 
+        elif opcoes_produto == "Listar Produtos":
+            st.subheader("Lista de Produto")
+            todos_produtos = Produtos.listar()
+            if todos_produtos:
+                dados_produtos = [c.to_dict() for c in todos_produtos]
+                
+                # Opcional: Converter para DataFrame para mais funcionalidades (filtro, ordenação)
+                df_produtos = pd.DataFrame(dados_produtos) 
+                
+                st.dataframe(df_produtos) # Exibe como uma tabela interativa
+            else:
+                st.info("Nenhum produto registrado.")
+
+
 show()
