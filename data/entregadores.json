@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "nome": "Vanderley",
+        "email": "van@gmail.com",
+        "senha": "7894",
+        "fone": "789456123147",
+        "transporte": "Moto"
+    },
+    {
+        "id": 2,
+        "nome": "Alice",
+        "email": "alice@gmail.com",
+        "senha": "7894",
+        "fone": "78569412365",
+        "transporte": "Moto"
+    }
+]

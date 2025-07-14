@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "nome": "Poco X6 pro",
+        "descricao": "Dual sim - 256GB - 8RAM - Video em 4k",
+        "preco": 1500.0,
+        "estoque": 12,
+        "id_categoria": 1
+    },
+    {
+        "id": 2,
+        "nome": "TV LG 32",
+        "descricao": "Full HD - ",
+        "preco": 900.0,
+        "estoque": 10,
+        "id_categoria": 2
+    }
+]

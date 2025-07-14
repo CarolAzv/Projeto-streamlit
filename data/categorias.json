@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "nome": "Smartphone",
+        "descricao": "Dispositivo eletrônico portátil"
+    },
+    {
+        "id": 2,
+        "nome": "Televisão",
+        "descricao": "TV Smart"
+    }
+]
