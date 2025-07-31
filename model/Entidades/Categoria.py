@@ -21,6 +21,7 @@ class Categoria:
         return self.__descricao
     def to_dict(self):
         return {"id": self.__id,"nome":self.__nome, "descricao": self.__descricao}
+        
     @classmethod
     def from_dict(cls, data: dict):
         return cls(
