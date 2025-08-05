@@ -847,15 +847,4 @@ def show():
                         except Exception as e:
                             st.error(f"Ocorreu um erro inesperado ao atualizar o status: {e}")
                 else:
-                    st.warning("Pedido selecionado não encontrado.")    
-                    
-  
-    
-
-
-
-
-
-
-
-                        
+                    st.warning("Pedido selecionado não encontrado.")
